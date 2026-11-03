@@ -1,0 +1,15 @@
+Alder Street — Crayon Case demo film (a fictional case: no real people, places or events)
+
+Story, drawings, animation, aged-paper / crayon / stain / eraser rendering, score and sound design:
+  original, procedural code in this folder (frame.js, film.js, looks.js, audio.py).
+Music: original. Music box, drone and low note synthesized in audio.py (numpy); no samples.
+Foley: synthesized in audio.py (crayon, eraser, stain, room tone, clock); no samples.
+Voice: none. Subtitles: none (burned in later by the channel).
+
+Fonts (SIL Open Font License 1.1, licence notes in fonts/):
+  Freesentation 4 Regular, Freesentation 6 SemiBold — supplied by the user (titles; subtitles later)
+  Gaegu Bold — JIKJI SOFT (used only for the base-style comparison frame)
+
+Code based on Lemo-Opuscar, styles/crayon-book/demo (gl.js, crayon.js, rig.js) and core/ tools.
+  MIT License, Copyright (c) 2026 LemoLab — full text in LICENSE-lemo-opuscar.txt. https://github.com/lemomo-ai/lemo-opuscar
+Reference for grammar only (nothing copied): Raymond Briggs, "The Snowman" (1982).
