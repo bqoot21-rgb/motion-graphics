@@ -25,8 +25,9 @@ It is not "cute vector art with a crayon filter": the look comes from **material
 ## 3. Colour logic
 
 - **A small box of drab crayons, about seven, never more**: grey-brown, umber, ink grey (먹색), faded blue, olive-grey, ash (skin), plus clear wax for resist. Outlines in one dark colour (indigo, dark brown, plum), **never black**; indigo `#2d3263` by default.
-- **One accent: hot pink `#FF1493`, and only it.** Only on what matters to the case: an important object, anything tied to the perpetrator, a key clue. Always at full pressure, so it reads solid. It is never blood, never on a victim's face or body, never decoration, never a second accent colour. If a frame has nothing that matters, it has no pink.
-- **At most one wash per film: the stain.** Dirty water / tea brown (transmission around `(0.70, 0.60, 0.44)`). It never paints the characters.
+- **One accent: hot pink `#FF1493`, and only it.** Only on what matters to the case: an important object, anything tied to the perpetrator, a key clue, **and blood**. Always at full pressure, so it reads solid. Never on a victim's face, never decoration, never a second accent colour. If a frame has nothing that matters, it has no pink.
+- **Blood is always hot pink, never red or brown.** On yellowed paper a brown or dark-red stain can't be read as anything. Draw blood as evidence, not violence: a small pool or stain, drops, smears, footprints or a trail leading somewhere, an object marked with it. A pool or stain is a wash in **cover mode** (`wash({ color: [1, 0.078, 0.576], cover: 1 })`): the pigment covers the paper instead of filtering it, so it stays hot pink on yellowed paper. Footprints, drops and smears are drawn in pink crayon. Never splatter, wounds or blood on a body.
+- **At most one wash per film**: either the **stain** (dirty water / tea brown, transmission around `(0.62, 0.52, 0.36)`: time, neglect, a spill that reveals clear wax) or **blood** (hot pink, cover mode, above). It never paints the characters.
 - Lots of bare (yellowed) paper; value comes from pressure, not extra hues. Pressure on big areas can stay a little lower than the base, so the paper shows through and the page reads faded.
 - Example box: *Alder Street* — indigo line, grey-brown walls `#8a7d6b`, umber roof `#5a4636`, wood `#4e4037`, olive-grey grass `#77755c`, faded blue `#7d8c9b` / coat `#5f7186`, ash skin `#c9bba3`, ink-grey hair `#3b3936`, clear wax, hot pink `#FF1493`.
 
@@ -95,17 +96,19 @@ A menu: use the ones your story needs.
 - **A dark window hides an erased figure** → put ghosts against a mid-value (faded blue, grey-brown), never against ink grey.
 - **Paper stains drift on screen** if the paper camera isn't set → always set the paper camera to the page camera (stains are in page coordinates).
 - **Pink spreading**: a second pink thing in the frame halves the first → audit every frame for exactly the pink that matters; no pink in the subtitle zone.
-- **Pink reads as blood** when it pools or drips → solid objects only, never puddles, splashes or drips.
+- **Blood drawn brown or dark red on yellowed paper reads as dirt** → blood is always hot pink, in cover mode for pools.
+- **A blood pool swallows a pink object** in it → keep the pool small and away from the clue; let footprints or a trail lead from one to the other.
+- **A multiply wash in hot pink turns crimson-orange** on yellowed paper → use cover mode for blood.
 - Knock-out drawn into a plain layer shows as grey crayon → use a dummy canvas.
 - Page turn from rectangle strips shows a staircase → an affine transform per strip.
 - Double vignette/emboss at a page-to-object transition → page with vignette 0, ramp the outer scene's in.
 - Screen-fixed tooth or stains bloat the file → anchor them, don't boil background fills, no ffmpeg grain.
 - Reverb IR from unit-variance noise is hugely loud → scale wet to ~18 dB under dry.
-- **Channel rule**: violence and abuse are never drawn; imply them (a closed door, an empty room, an object left behind). No real photos or footage.
+- **Channel rule**: violence and abuse are never drawn; imply them (a closed door, an empty room, an object left behind, a blood trace as evidence). No real photos or footage.
 
 ## 10. Engine
 
-In `demo/`: `gl.js` (WebGL2 compositor: aged paper with anchored stains, foxing, crease and browned edges; wax adhesion; knock-out; the stain + clear-wax resist; the ghost pass for erased drawings; emboss/vignette), `crayon.js` (`line` ribbons with taper, streaks, boil; `fill` hatching with overshoot; `text`; shapes), `rig.js` (occlusion + knock-out parts, limb tubes), `looks.js` (the crayon box). File map and commands: [DEMO.md](DEMO.md#build-notes). Techniques not used there (model sheets, page turn, book on a desk): `$LIB/styles/crayon-book/DEMO.md` and its `demo/`.
+In `demo/`: `gl.js` (WebGL2 compositor: aged paper with anchored stains, foxing, crease and browned edges; wax adhesion; knock-out; the stain + clear-wax resist; the wash's cover mode for hot-pink blood; the ghost pass for erased drawings; emboss/vignette), `crayon.js` (`line` ribbons with taper, streaks, boil; `fill` hatching with overshoot; `text`; shapes), `rig.js` (occlusion + knock-out parts, limb tubes), `looks.js` (the crayon box). File map and commands: [DEMO.md](DEMO.md#build-notes). Techniques not used there (model sheets, page turn, book on a desk): `$LIB/styles/crayon-book/DEMO.md` and its `demo/`.
 
 ## 11. Variation space
 

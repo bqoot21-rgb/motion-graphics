@@ -116,7 +116,7 @@ void main(){
 const FS_WASH = `#version 300 es
 precision highp float; in vec2 uv; out vec4 o;
 uniform sampler2D uPrev; uniform sampler2D uW; uniform vec2 uRes; uniform vec3 uT; uniform vec2 uGoff;
-uniform float uResist; uniform float uEdge; uniform float uGran; uniform float uR0; uniform float uR1;
+uniform float uResist; uniform float uEdge; uniform float uGran; uniform float uR0; uniform float uR1; uniform float uCover;
 ${TOOTH}
 void main(){
   vec4 P = texture(uPrev, uv);
@@ -137,7 +137,10 @@ void main(){
     dd = clamp(dd*res, 0., 1.25);
     vec3 tr = mix(vec3(1.), uT, clamp(dd,0.,1.));
     tr *= mix(1.0, 0.82, clamp(dd-1.0,0.,1.)*4.);
-    o = vec4(P.rgb*tr, P.a);
+    vec3 cm = P.rgb*tr;
+    // cover mode (blood): the pigment covers the paper colour instead of filtering it, so hot pink stays hot pink on yellowed paper
+    vec3 cv = mix(P.rgb, uT*(0.9 + 0.1*lo), clamp(dd*1.15,0.,1.)*.92) * mix(1.0, 0.8, clamp(dd-1.0,0.,1.)*4.);
+    o = vec4(mix(cm, cv, uCover), P.a);
   } else o = P;
 }`;
 
@@ -247,12 +250,12 @@ export function makeComp(canvas, w = W, h = H) {
       use(P.crayon, { uGoff: goff, uGain: gain, uSoft: soft, uGhost: ghost }); gl.uniform1i(P.crayon.u.uL, 0); draw();
       gl.disable(gl.BLEND);
     },
-    wash(cv, { color = [0.16, 0.2, 0.46], goff = [0, 0], resist = 0.93, edge = 1.6, gran = 0.6, r0 = 0.12, r1 = 0.55 } = {}) {
+    wash(cv, { color = [0.16, 0.2, 0.46], goff = [0, 0], resist = 0.93, edge = 1.6, gran = 0.6, r0 = 0.12, r1 = 0.55, cover = 0 } = {}) {
       gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, washTex);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, cv); gl.generateMipmap(gl.TEXTURE_2D);
       gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, T[cur].t);
       const nx = 1 - cur; gl.bindFramebuffer(gl.FRAMEBUFFER, T[nx].f); gl.disable(gl.BLEND);
-      use(P.wash, { uT: color, uGoff: goff, uResist: resist, uEdge: edge, uGran: gran, uR0: r0, uR1: r1 });
+      use(P.wash, { uT: color, uGoff: goff, uResist: resist, uEdge: edge, uGran: gran, uR0: r0, uR1: r1, uCover: cover });
       gl.uniform1i(P.wash.u.uPrev, 0); gl.uniform1i(P.wash.u.uW, 1); draw();
       cur = nx;
     },

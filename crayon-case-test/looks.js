@@ -31,6 +31,7 @@ export const LOOKS = {
     shoe: '#3b3936',
     wax: null,                             // clear candle wax = paper colour (invisible until the stain passes)
     wash: [0.62, 0.52, 0.36],              // dirty water / tea stain
+    blood: [1.0, 0.078, 0.576],            // #FF1493: blood is the accent too, as a covering stain
     face: 'blank', ghost: 1, boil: 0.5,
     title: { font: 'Freesentation', weight: 600, size: 66 },
   },
