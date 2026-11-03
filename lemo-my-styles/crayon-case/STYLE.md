@@ -68,8 +68,8 @@ Key figures ≥ 1/4 of frame height in close shots; keep the bottom of the frame
 - **Slow and low, no bright nursery instruments**: a **slow music box** (lead; it can wind down with a pitch droop, and stop mid-phrase), a **low drone** (bowed or synthesized, sub-heavy, barely moving), sparse low piano or celesta single notes, a soft felt-muted pulse at most. No ukulele, no toy-piano jollity, no shaker, no strings section, no grand-piano melody. One short theme, heard broken most of the film and whole at most once.
 - **Silence is a beat**: a full beat of nothing after a reveal; the music box stopping is an event.
 - **Foley follows the material**: **crayon** = stick-slip band-passed noise whose grain follows stroke speed, close and dry, often the loudest thing; **eraser** = rubbery low-mid friction in short back-and-forth bursts, crumbs brushed off; the stain = a slow wet creep (soft low-passed noise); a page turn (lift / whoosh / flap); paper handling. Ambience: room tone, a distant clock, wind; no birdsong.
-- **Mix**: music low under narration, rising only in wordless passages; foley forward. −14 LUFS.
-- **Voice**: calm, even, documentary; short lines with breaths. Compress before EQ, cut the highs, de-ess, a small dry room; a few dB over the bed, never louder. Whisper-check every line, dry and on the final mix. One voice across the channel.
+- **Mix**: music low under narration, rising only in wordless passages. **Foley stays well under the voice**: under narration, crayon / eraser / stain sounds sit about 12 dB below the voice (in the first narrated test they were level with it and too loud); in wordless passages they may come up to about 6 dB below where the voice would be. −14 LUFS.
+- **Voice**: calm, even, documentary; short lines with breaths. Compress before EQ, cut the highs, de-ess, a small dry room; a few dB over the bed, never louder. Whisper-check every line, dry and on the final mix. One voice across the channel: **Kokoro `bm_george`** (chosen after the narration test; speed around 0.9).
 
 ## 8. Native moves
 
