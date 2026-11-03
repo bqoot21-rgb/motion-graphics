@@ -116,7 +116,7 @@ void main(){
 const FS_WASH = `#version 300 es
 precision highp float; in vec2 uv; out vec4 o;
 uniform sampler2D uPrev; uniform sampler2D uW; uniform vec2 uRes; uniform vec3 uT; uniform vec2 uGoff;
-uniform float uResist; uniform float uEdge; uniform float uGran;
+uniform float uResist; uniform float uEdge; uniform float uGran; uniform float uR0; uniform float uR1;
 ${TOOTH}
 void main(){
   vec4 P = texture(uPrev, uv);
@@ -133,7 +133,7 @@ void main(){
     float gr = smoothstep(.35, .05, t);                                              // granulation settles only in the deepest paper-tooth pits
     float dd = d * (0.82 + 0.3*lo) * (1.0 + uGran*.45*gr) + edge;
     float wax = P.a;
-    float res = 1.0 - uResist*smoothstep(.12, .55, wax);                            // crayon resist
+    float res = 1.0 - uResist*smoothstep(uR0, uR1, wax);                            // crayon resist
     dd = clamp(dd*res, 0., 1.25);
     vec3 tr = mix(vec3(1.), uT, clamp(dd,0.,1.));
     tr *= mix(1.0, 0.82, clamp(dd-1.0,0.,1.)*4.);
@@ -237,20 +237,22 @@ export function makeComp(canvas, w = W, h = H) {
       use(P.knock, { uPaper: paper, uPoff: poff }); gl.uniform1i(P.knock.u.uL, 0); draw();
     },
     group(C, o = {}) { this.knock(C.k.c); this.crayon(C.f.c, o); this.crayon(C.l.c, o); },
-    crayon(cv, { goff = [0, 0], gain = 1, soft = 0.07, ghost = 0 } = {}) {
+    crayon(cv, { goff = [0, 0], gain = 1, soft = 0.07, ghost = 0, clear = false } = {}) {
       gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, layerTex);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, cv);
       gl.bindFramebuffer(gl.FRAMEBUFFER, T[cur].f);
-      gl.enable(gl.BLEND); gl.blendFuncSeparate(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA, gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+      gl.enable(gl.BLEND);
+      if (clear) gl.blendFuncSeparate(gl.ZERO, gl.ONE, gl.ONE, gl.ONE_MINUS_SRC_ALPHA);   // clear wax: no colour, only coverage (it resists a wash)
+      else gl.blendFuncSeparate(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA, gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
       use(P.crayon, { uGoff: goff, uGain: gain, uSoft: soft, uGhost: ghost }); gl.uniform1i(P.crayon.u.uL, 0); draw();
       gl.disable(gl.BLEND);
     },
-    wash(cv, { color = [0.16, 0.2, 0.46], goff = [0, 0], resist = 0.93, edge = 1.6, gran = 0.6 } = {}) {
+    wash(cv, { color = [0.16, 0.2, 0.46], goff = [0, 0], resist = 0.93, edge = 1.6, gran = 0.6, r0 = 0.12, r1 = 0.55 } = {}) {
       gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, washTex);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, cv); gl.generateMipmap(gl.TEXTURE_2D);
       gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, T[cur].t);
       const nx = 1 - cur; gl.bindFramebuffer(gl.FRAMEBUFFER, T[nx].f); gl.disable(gl.BLEND);
-      use(P.wash, { uT: color, uGoff: goff, uResist: resist, uEdge: edge, uGran: gran });
+      use(P.wash, { uT: color, uGoff: goff, uResist: resist, uEdge: edge, uGran: gran, uR0: r0, uR1: r1 });
       gl.uniform1i(P.wash.u.uPrev, 0); gl.uniform1i(P.wash.u.uW, 1); draw();
       cur = nx;
     },

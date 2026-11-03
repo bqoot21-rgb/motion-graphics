@@ -30,7 +30,7 @@ export const LOOKS = {
     clue: '#FF1493',                       // THE accent: hot pink, only on what matters
     shoe: '#3b3936',
     wax: null,                             // clear candle wax = paper colour (invisible until the stain passes)
-    wash: [0.70, 0.60, 0.44],              // dirty water / tea stain
+    wash: [0.62, 0.52, 0.36],              // dirty water / tea stain
     face: 'blank', ghost: 1, boil: 0.5,
     title: { font: 'Freesentation', weight: 600, size: 66 },
   },

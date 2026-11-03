@@ -50,15 +50,17 @@ function face(C, K, P, s, o) {
   }
 }
 // head and shoulders seen through a window
-function bust(C, K, x, y, s, o = {}) {
+export function bust(C, K, x, y, s, o = {}) {
   const P = pts => pts.map(([a, b]) => [x + a * s, y + b * s]);
+  const ld = o.draw ?? 1, fd = o.fdraw ?? 1;
   const lo = { col: K.ink, w: 6, p: 0.95, boil: o.boil ?? 1 };
-  part(C, P(smooth([[-54, 0], [-40, -40], [0, -48], [40, -40], [54, 0]], 6)), { p: 0.85, gap: 7, w: 9, col: K.coat, seed: 500, boil: 0 }, { ...lo, seed: 501 });
-  part(C, P(handCircle(0, -80, 36, 502, 0)), { p: 0.6, gap: 6, w: 8, col: K.skin, seed: 503, boil: 0 }, { ...lo, seed: 504 });
-  const ho = [[-40, -84], [-36, -108], [0, -122], [36, -108], [40, -84]];
-  part(C, P(smooth([...ho, [22, -104], [-12, -102]], 6)), { p: 0.95, gap: 6, w: 8, col: K.hair, seed: 505, boil: 0 }, null, { occ: false });
-  line(C.l, P(smooth(ho, 6, false)), { ...lo, seed: 506 });
-  face(C, K, pts => P(pts.map(([a, b]) => [a * 0.62, -80 + (b + 352) * 0.62])), s, o);
+  const D = (a, b) => Math.min(1, Math.max(0, (ld - a) / (b - a)));
+  part(C, P(smooth([[-54, 0], [-40, -40], [0, -48], [40, -40], [54, 0]], 6)), { p: 0.85, gap: 7, w: 9, col: K.coat, seed: 500, boil: 0, draw: fd }, { ...lo, seed: 501, draw: D(0.45, 1) });
+  part(C, P(handCircle(0, -80, 36, 502, 0)), { p: 0.6, gap: 6, w: 8, col: K.skin, seed: 503, boil: 0, draw: fd }, { ...lo, seed: 504, draw: D(0, 0.5) });
+  const ho = [[-38, -96], [-34, -112], [0, -124], [34, -112], [38, -96]];
+  part(C, P(smooth([...ho, [20, -108], [-12, -106]], 6)), { p: 0.95, gap: 6, w: 8, col: K.hair, seed: 505, boil: 0, draw: fd }, null, { occ: false });
+  line(C.l, P(smooth(ho, 6, false)), { ...lo, seed: 506, draw: D(0.3, 0.75) });
+  if ((o.face ?? 1) > 0) face(C, K, pts => P(pts.map(([a, b]) => [a * 0.62, -80 + (b + 352) * 0.62])), s, o);
 }
 
 export function styleFrame(comp, t, look) {
