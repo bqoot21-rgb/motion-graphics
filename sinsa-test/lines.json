@@ -1,0 +1,22 @@
+[
+ {
+  "id": "n1",
+  "text": "June 14th, 1998, the night South Korea played Mexico in its first World Cup match.",
+  "asr": "June 14th, 1998, the night South Korea played Mexico in its first World Cup match.",
+  "voice": "am_michael",
+  "speed": 0.9
+ },
+ {
+  "id": "n2",
+  "text": "While the whole country was cheering in front of their TVs,",
+  "voice": "am_michael",
+  "speed": 0.9
+ },
+ {
+  "id": "n3",
+  "text": "a tragedy was quietly unfolding in a basement bar in Sinsa-dong, Gangnam, Seoul.",
+  "asr": "a tragedy was quietly unfolding in a basement bar in Sinsa-dong, Gangnam, Seoul.",
+  "voice": "am_michael",
+  "speed": 0.9
+ }
+]

@@ -1,0 +1,10 @@
+June 14th, 1998 — Crayon Case test (hook only). Narration text supplied by the user.
+
+Drawings, animation, crayon / aged-paper / blood-stain rendering, score and sound design:
+  original, procedural code in this folder (film.js, audio.py).
+Music: original; music box, drone and low note synthesized in audio.py (numpy). No samples.
+Foley and the TV crowd: synthesized in audio.py (numpy). No samples, no broadcast audio.
+Voice: Kokoro TTS v1.0 (Apache-2.0), voice am_michael, speed 0.9.
+Fonts: Freesentation 4 Regular / 6 SemiBold (SIL Open Font License 1.1), supplied by the user — subtitles and titles.
+Code based on Lemo-Opuscar (styles/crayon-book/demo, core/ tools), MIT License, Copyright (c) 2026 LemoLab —
+  full text in LICENSE-lemo-opuscar.txt.
