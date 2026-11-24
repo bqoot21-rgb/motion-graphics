@@ -268,8 +268,8 @@ def speech_bubble(c, text, x, y, t0, t, maxw=760, sz=54, tail=(0, 1), words=None
         toks = line.split(" ")
         xx = ox + sz * 0.8
         for tok in toks:
-            col = fg if shown is None or k < shown else fg + (0,)
-            d.text((xx, oy + sz * 0.5 + li * lh), tok, font=f, fill=col)
+            if shown is None or k < shown:
+                d.text((xx, oy + sz * 0.5 + li * lh), tok, font=f, fill=fg)
             xx += d.textlength(tok + " ", font=f)
             k += 1
     paste_layer(c, lay, x, y, eback(p, 2.2))
@@ -972,7 +972,7 @@ def main():
     write_wav(os.path.join(tmp, "mus.wav"), mus)
     ff = subprocess.Popen(["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24",
                            "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-", "-c:v", "libx264", "-preset", "medium",
-                           "-crf", "21", "-pix_fmt", "yuv420p", os.path.join(tmp, "v.mp4")], stdin=subprocess.PIPE)
+                           "-crf", "25", "-pix_fmt", "yuv420p", os.path.join(tmp, "v.mp4")], stdin=subprocess.PIPE)
     with Pool(os.cpu_count()) as pool:
         for i, fr in enumerate(pool.imap(render, range(NFRAMES), chunksize=3)):
             ff.stdin.write(fr.tobytes())
