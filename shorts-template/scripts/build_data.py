@@ -3,7 +3,7 @@ import json, sys
 FPS = 30
 MAXC = 15  # max characters per subtitle line (no spaces)
 segs = json.load(open(sys.argv[1]))[: int(sys.argv[2])]
-ALIAS = {"lady": "pool"}  # scenes that continue the same shot
+ALIAS = json.loads(sys.argv[4]) if len(sys.argv) > 4 else {"lady": "pool"}  # scenes that continue the same shot
 for s_ in segs:
     s_["scene"] = ALIAS.get(s_["scene"], s_["scene"])
 scenes, cur = [], 0.0
@@ -58,7 +58,7 @@ for i, s in enumerate(segs):
     cur = st + words[-1][1]
 scenes[-1]["dur"] = cur + 0.9 - scenes[-1]["start"]
 total = scenes[-1]["start"] + scenes[-1]["dur"]
-json.dump({"fps": FPS, "total": total, "scenes": scenes}, open("src/data.json", "w"), ensure_ascii=False, indent=1)
+json.dump({"fps": FPS, "total": total, "scenes": scenes}, open(sys.argv[3] if len(sys.argv) > 3 else "src/data.json", "w"), ensure_ascii=False, indent=1)
 print(round(total, 2), [(s["key"], round(s["start"], 2)) for s in scenes])
 for s in scenes:
     for g in s["segs"]:

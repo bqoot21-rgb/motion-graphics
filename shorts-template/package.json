@@ -4,7 +4,8 @@
   "scripts": {
     "studio": "remotion studio",
     "render": "remotion render src/index.ts Story out/raw.mp4 --browser-executable=/opt/pw-browsers/chromium && ffmpeg -y -v error -i out/raw.mp4 -c:v copy -af loudnorm=I=-14:TP=-1.5 -c:a aac -b:a 192k out/story.mp4",
-    "data": "python3 scripts/build_data.py scripts/segments_full.json 4"
+    "data": "python3 scripts/build_data.py scripts/segments_full.json 4",
+    "render:cine": "remotion render src/index.ts Cine out/cine_raw.mp4 --concurrency=1 --browser-executable=/opt/pw-browsers/chromium && ffmpeg -y -v error -i out/cine_raw.mp4 -c:v copy -af loudnorm=I=-14:TP=-1.5 -c:a aac -b:a 192k out/cine.mp4"
   },
   "dependencies": {
     "@remotion/cli": "4.0.541",
